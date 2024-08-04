@@ -11,12 +11,12 @@
         Input Variabel
       </button>
       <button
-        @click="() => navigateTo('input-aturan')"
+        @click="() => $emit('goto', 'input-aturan')"
         class="hover:bg-sky-900 transition-colors px-4 py-2 rounded">
         Input Aturan
       </button>
       <button
-        @click="() => navigateTo('profil')"
+        @click="() => $emit('goto', 'profil')"
         class="hover:bg-sky-900 transition-colors px-4 py-2 rounded">
         Profil
       </button>

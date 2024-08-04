@@ -4,6 +4,8 @@
   import {ref} from 'vue'
   import Dashboard from './pages/Dashboard.vue'
   import InputVariabel from "./pages/InputVariabel.vue"
+  import InputAturan from "./pages/InputAturan.vue"
+  import Profil from "./pages/Profil.vue"
 
   const routeName = ref('')
 
@@ -16,6 +18,8 @@
   <main>
     <Dashboard v-if="routeName === 'dashboard'" @goto="(e) => changeRoute(e)"/>
     <InputVariabel v-if="routeName === 'input-variabel'" @goto="(e) => changeRoute(e)"/>
+    <InputAturan v-if="routeName === 'input-aturan'" @goto="(e) => changeRoute(e)"/>
+    <Profil v-if="routeName === 'profil'" @goto="(e) => changeRoute(e)"/>
     <Login v-else @goto="(e) => changeRoute(e)" />
   </main>
 </template>
