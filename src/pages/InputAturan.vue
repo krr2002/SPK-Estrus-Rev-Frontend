@@ -26,7 +26,7 @@ const navigateTo = (route: string) => {
       <button @click="() => $emit('goto', 'profil')" class="hover:bg-sky-900 transition-colors px-4 py-2 rounded">
         Profil
       </button>
-      <button @click="() => navigateTo('')" class="bg-red-600 hover:bg-red-700 transition-colors px-4 py-2 rounded">
+      <button @click="$emit('goto', ' ')" class="bg-red-600 hover:bg-red-700 transition-colors px-4 py-2 rounded">
         Keluar
       </button>
     </nav>

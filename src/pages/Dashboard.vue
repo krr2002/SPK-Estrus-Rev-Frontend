@@ -21,7 +21,7 @@
         Profil
       </button>
       <button
-        @click="() => navigateTo('')"
+        @click="() => $emit('goto', '')"
         class="bg-red-600 hover:bg-red-700 transition-colors px-4 py-2 rounded">
         Keluar
       </button>
