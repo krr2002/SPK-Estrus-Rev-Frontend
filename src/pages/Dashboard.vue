@@ -1,14 +1,12 @@
 <script setup lang="ts">
-const navigateTo = (route: string) => {
-  $emit('goto', route);
-};
+  
 </script>
 
 <template>
   <div class="w-full min-h-screen bg-gray-100">
     <nav class="bg-sky-800 text-white p-4 flex justify-end items-center space-x-4">
       <button
-        @click="() => navigateTo('input-variabel')"
+        @click="() => $emit('goto', 'input-variabel')"
         class="hover:bg-sky-900 transition-colors px-4 py-2 rounded">
         Input Variabel
       </button>

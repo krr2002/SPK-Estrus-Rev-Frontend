@@ -1,30 +1,21 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import Dashboard from './pages/Dashboard.vue';
-import InputVariabel from './pages/InputVariabel.vue';
-import InputAturan from './pages/InputAturan.vue';
-import Profil from './pages/Profil.vue';
+  import "./style/main.css"
+  import Login from './pages/Login.vue'
+  import {ref} from 'vue'
+  import Dashboard from './pages/Dashboard.vue'
+  import InputVariabel from "./pages/InputVariabel.vue"
 
-const routeName = ref('dashboard'); // Set default route
+  const routeName = ref('')
 
-const changeRoute = (newRoute: string) => {
-  routeName.value = newRoute;
-};
+  const changeRoute = (name: string) => {
+    routeName.value = name
+  }
 </script>
 
 <template>
   <main>
-    <Dashboard v-if="routeName === 'dashboard'" @goto="changeRoute" />
-    <InputVariabel v-if="routeName === 'input-variabel'" @goto="changeRoute" />
-    <InputAturan v-if="routeName === 'input-aturan'" @goto="changeRoute" />
-    <Profil v-if="routeName === 'profil'" @goto="changeRoute" />
-    <!-- If no route matches, show a default page, e.g., a login or error page -->
-    <div v-if="routeName === ''" class="text-center mt-10">
-      <h1 class="text-3xl font-bold text-gray-900">Please select a page</h1>
-    </div>
+    <Dashboard v-if="routeName === 'dashboard'" @goto="(e) => changeRoute(e)"/>
+    <InputVariabel v-if="routeName === 'input-variabel'" @goto="(e) => changeRoute(e)"/>
+    <Login v-else @goto="(e) => changeRoute(e)" />
   </main>
 </template>
-
-<style scoped>
-/* Add any scoped styles here if needed */
-</style>
