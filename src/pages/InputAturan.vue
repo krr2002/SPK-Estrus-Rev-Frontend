@@ -5,15 +5,11 @@ import { ref } from 'vue';
 const variable1 = ref('');
 const variable2 = ref('');
 const operator = ref('and'); // Default operator
-
-const navigateTo = (route: string) => {
-  $emit('goto', route);
-};
 </script>
 
 <template>
-  <div class="w-full min-h-screen bg-gray-100">
-    <nav class="bg-sky-800 text-white p-4 flex justify-end items-center space-x-4">
+  <div class="w-full min-h-screen bg-gray-100 flex">
+    <nav class="bg-sky-800 text-white p-4 flex flex-col space-y-4">
       <button @click="() => $emit('goto', 'dashboard')" class="hover:bg-sky-900 transition-colors px-4 py-2 rounded">
         Dashboard
       </button>
@@ -30,7 +26,7 @@ const navigateTo = (route: string) => {
         Keluar
       </button>
     </nav>
-    <section class="p-6">
+    <section class="p-6 flex-1">
       <h1 class="text-3xl font-bold text-gray-900 mb-8">Input Aturan</h1>
       <form class="space-y-4">
         <div class="flex items-center space-x-4">

@@ -17,9 +17,9 @@
 <template>
   <main>
     <Dashboard v-if="routeName === 'dashboard'" @goto="(e) => changeRoute(e)"/>
-    <InputVariabel v-if="routeName === 'input-variabel'" @goto="(e) => changeRoute(e)"/>
-    <InputAturan v-if="routeName === 'input-aturan'" @goto="(e) => changeRoute(e)"/>
-    <Profil v-if="routeName === 'profil'" @goto="(e) => changeRoute(e)"/>
+    <InputVariabel v-else-if="routeName === 'input-variabel'" @goto="(e) => changeRoute(e)"/>
+    <InputAturan v-else-if="routeName === 'input-aturan'" @goto="(e) => changeRoute(e)"/>
+    <Profil v-else-if="routeName === 'profil'" @goto="(e) => changeRoute(e)"/>
     <Login v-else @goto="(e) => changeRoute(e)" />
   </main>
 </template>

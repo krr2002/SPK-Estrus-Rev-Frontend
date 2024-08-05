@@ -3,8 +3,8 @@ const emit = defineEmits();
 </script>
 
 <template>
-  <div class="w-full min-h-screen bg-gray-100">
-    <nav class="bg-sky-800 text-white p-4 flex justify-end items-center space-x-4">
+  <div class="w-full min-h-screen bg-gray-100 flex">
+    <nav class="bg-sky-800 text-white p-4 flex flex-col space-y-4">
       <button @click="$emit('goto', 'dashboard')" class="hover:bg-sky-900 transition-colors px-4 py-2 rounded">
         Dashboard
       </button>
@@ -21,7 +21,7 @@ const emit = defineEmits();
         Keluar
       </button>
     </nav>
-    <section class="p-6">
+    <section class="p-6 flex-1">
       <h1 class="text-3xl font-bold text-gray-900 mb-8">Profil</h1>
       <p class="text-lg text-gray-700">Tes</p>
     </section>
