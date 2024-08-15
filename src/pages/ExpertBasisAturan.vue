@@ -9,7 +9,7 @@ const emit = defineEmits();
         Dashboard
       </button>
       <button @click="$emit('goto', 'expert-parameter')" class="hover:bg-sky-900 transition-colors px-4 py-2 rounded">
-        Paramter
+        Parameter
       </button>
       <button @click="$emit('goto', 'expert-basis')" class="hover:bg-sky-900 transition-colors px-4 py-2 rounded">
         Basis Aturan
