@@ -30,7 +30,7 @@ const emit = defineEmits();
     <section class="p-6 flex-1">
       <h1 class="text-3xl font-bold text-gray-900 mb-8">Dashboard</h1>
       <!-- Add your dashboard content here -->
-      <p>Selamat datang di Admin!</p>
+      <p>Selamat datang di Admin Basis!</p>
     </section>
   </div>
 </template>
