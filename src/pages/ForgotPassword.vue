@@ -3,9 +3,9 @@ const emit = defineEmits<{
   (e: 'goto', route: string): void;
 }>();
 
-const login = () => {
-  // Fungsi login yang dipanggil saat tombol login ditekan
-  emit('goto', 'admin');
+const sendPasswordReset = () => {
+  // Function called when the "Send Password Reset" button is pressed
+  emit('goto', 'reset-link-sent'); // Replace 'reset-link-sent' with the desired route after the reset link is sent
 };
 </script>
 
@@ -16,32 +16,25 @@ const login = () => {
       <!-- Gambar -->
       <img src="../assets/Cow.png" alt="Tauri KAK CHIP" class="w-3/4 max-w-md"/>
     </div>
-    <!-- Sisi kanan untuk form login -->
+    <!-- Sisi kanan untuk form forgot password -->
     <div class="flex-1 flex flex-col items-center justify-center">
-      <h1 class="mb-8 text-3xl font-bold">Welcome to Tauri KAK CHIP!</h1>
+      <h1 class="mb-8 text-3xl font-bold">Forgot Password</h1>
       <div class="flex flex-col space-y-4 w-3/4 max-w-md">
-        <!-- Input nomor WA/Email -->
+        <!-- Input email -->
         <input
-          type="text"
-          placeholder="Nomor HP / Email"
+          type="email"
+          placeholder="Enter your email"
           class="px-4 py-2 rounded border border-gray-300"
         />
-        <!-- Input password -->
-        <input
-          type="password"
-          placeholder="Password"
-          class="px-4 py-2 rounded border border-gray-300"
-        />
-        <!-- Tombol login -->
+        <!-- Tombol kirim password -->
         <button
-          @click="login"
+          @click="sendPasswordReset"
           class="bg-sky-800 hover:bg-sky-900 transition-colors px-12 py-2 rounded text-white">
-          Login
+          Send Password
         </button>
-        <!-- Tautan sign up dan forgot password -->
-        <div class="flex justify-between mt-4">
-          <a href="#" @click="() => $emit('goto', 'signup')" class="text-blue-600 hover:underline">Sign Up</a>
-          <a href="#" @click="() => $emit('goto', 'forgot-password')" class="text-blue-600 hover:underline">Forgot Password?</a>
+        <!-- Tautan kembali ke login -->
+        <div class="mt-4">
+          <a href="#" @click="emit('goto', 'login')" class="text-blue-600 hover:underline">Back to Login</a>
         </div>
       </div>
     </div>

@@ -20,6 +20,9 @@ const emit = defineEmits();
       <button @click="$emit('goto', 'expert-report')" class="hover:bg-sky-900 transition-colors px-4 py-2 rounded">
         Report
       </button>
+      <button @click="$emit('goto', 'expert-profil')" class="hover:bg-sky-900 transition-colors px-4 py-2 rounded">
+        Profil
+      </button>
       <button @click="$emit('goto', '')" class="bg-red-600 hover:bg-red-700 transition-colors px-4 py-2 rounded">
         Keluar
       </button>

@@ -14,6 +14,9 @@ const emit = defineEmits();
       <button @click="$emit('goto', 'admin-ternak')" class="hover:bg-sky-900 transition-colors px-4 py-2 rounded">
         Manajemen Ternak
       </button>
+      <button @click="$emit('goto', 'admin-param')" class="hover:bg-sky-900 transition-colors px-4 py-2 rounded">
+        Manajemen Parameter
+      </button>
       <button @click="$emit('goto', 'admin-basis')" class="hover:bg-sky-900 transition-colors px-4 py-2 rounded">
         Manajemen Basis Aturan
       </button>

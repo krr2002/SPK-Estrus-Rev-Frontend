@@ -1,5 +1,23 @@
 <script setup lang="ts">
-const emit = defineEmits();
+import { ref } from 'vue';
+
+// Dummy data, replace this with data from your store or API
+const userData = ref({
+  nik: '1234567890123456',
+  nama: 'John Doe',
+  email: 'johndoe@example.com',
+  nohp: '08123456789',
+  alamat: 'Jl. Raya No. 1',
+  distrik: 'Distrik 1',
+  kelurahan: 'Kelurahan A',
+});
+
+// Function to handle navigation
+const emit = defineEmits<{
+  (e: 'goto', route: string): void;
+}>();
+
+
 </script>
 
 <template>
@@ -21,10 +39,40 @@ const emit = defineEmits();
         Keluar
       </button>
     </nav>
-    <section class="p-6 flex-1">
-      <h1 class="text-3xl font-bold text-gray-900 mb-8">Dashboard</h1>
-      <!-- Add your dashboard content here -->
-      <p>Selamat datang di User Profil!</p>
+    <section class="p-6 flex-1 flex flex-col">
+      <h1 class="text-3xl font-bold text-gray-900 mb-4">Profil</h1>
+      <!-- Profile Information -->
+      <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="mb-4">
+          <strong class="text-gray-700">NIK:</strong>
+          <p>{{ userData.nik }}</p>
+        </div>
+        <div class="mb-4">
+          <strong class="text-gray-700">Nama:</strong>
+          <p>{{ userData.nama }}</p>
+        </div>
+        <div class="mb-4">
+          <strong class="text-gray-700">Email:</strong>
+          <p>{{ userData.email }}</p>
+        </div>
+        <div class="mb-4">
+          <strong class="text-gray-700">No HP:</strong>
+          <p>{{ userData.nohp }}</p>
+        </div>
+        <div class="mb-4">
+          <strong class="text-gray-700">Alamat:</strong>
+          <p>{{ userData.alamat }}</p>
+        </div>
+        <div class="mb-4">
+          <strong class="text-gray-700">Distrik:</strong>
+          <p>{{ userData.distrik }}</p>
+        </div>
+        <div class="mb-4">
+          <strong class="text-gray-700">Kelurahan:</strong>
+          <p>{{ userData.kelurahan }}</p>
+        </div>
+        
+      </div>
     </section>
   </div>
 </template>

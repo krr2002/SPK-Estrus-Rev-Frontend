@@ -1,33 +1,29 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-// State untuk menyimpan parameter dan inputannya
-const parameterName = ref('');
-const parameterValues = ref<string[]>([]);
+// Dummy data
+const parameters = ref([
+  { name: 'Parameter 1', values: ['hangat', 'dingin'] },
+  { name: 'Parameter 2', values: ['panas', 'dingin'] },
+  { name: 'Parameter 3', values: ['tinggi', 'rendah'] },
+]);
 
-// Fungsi untuk menambahkan parameter dan nilai-nilainya
-const addParameter = () => {
-  if (parameterName.value && parameterValues.value.length > 0) {
-    // Tambahkan parameter dan nilai-nilainya ke database atau state global
-    console.log('Parameter:', parameterName.value);
-    console.log('Values:', parameterValues.value);
-    
-    // Reset input
-    parameterName.value = '';
-    parameterValues.value = [];
-  }
+
+// Function to handle the edit button click
+const editParameter = (index: number) => {
+  console.log('Edit Parameter at index', index);
 };
 
-// Fungsi untuk menambah inputan nilai
-const addValueInput = () => {
-  parameterValues.value.push('');
+// Function to handle the delete button click
+const deleteParameter = (index: number) => {
+  parameters.value.splice(index, 1);
 };
 </script>
 
 <template>
   <div class="w-full min-h-screen bg-gray-100 flex">
     <nav class="bg-sky-800 text-white p-4 flex flex-col space-y-4">
-      <button @click="$emit('goto', 'dashboard')" class="hover:bg-sky-900 transition-colors px-4 py-2 rounded">
+      <button @click="$emit('goto', 'expert')" class="hover:bg-sky-900 transition-colors px-4 py-2 rounded">
         Dashboard
       </button>
       <button @click="$emit('goto', 'expert-parameter')" class="bg-sky-900 hover:bg-sky-800 transition-colors px-4 py-2 rounded">
@@ -42,31 +38,55 @@ const addValueInput = () => {
       <button @click="$emit('goto', 'expert-report')" class="hover:bg-sky-900 transition-colors px-4 py-2 rounded">
         Report
       </button>
+      <button @click="$emit('goto', 'expert-profil')" class="hover:bg-sky-900 transition-colors px-4 py-2 rounded">
+        Profil
+      </button>
       <button @click="$emit('goto', '')" class="bg-red-600 hover:bg-red-700 transition-colors px-4 py-2 rounded">
         Keluar
       </button>
     </nav>
     <section class="p-6 flex-1">
-      <h1 class="text-3xl font-bold text-gray-900 mb-8">Input Parameter</h1>
-      <form @submit.prevent="addParameter" class="space-y-4">
-        <div>
-          <label class="block text-gray-700">Parameter Name:</label>
-          <input v-model="parameterName" type="text" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
-        </div>
-        <div>
-          <label class="block text-gray-700">Values:</label>
-          <div v-for="(value, index) in parameterValues" :key="index" class="flex items-center space-x-2 mb-2">
-            <input v-model="parameterValues[index]" type="text" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
-            <button type="button" @click="parameterValues.splice(index, 1)" class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded">Remove</button>
-          </div>
-          <button type="button" @click="addValueInput" class="bg-sky-800 hover:bg-sky-900 text-white px-4 py-2 rounded">Add Value</button>
-        </div>
-        <button type="submit" class="bg-sky-800 hover:bg-sky-900 text-white px-4 py-2 rounded">Submit</button>
-      </form>
+      <h1 class="text-3xl font-bold text-gray-900 mb-8">Parameter</h1>
+      <!-- New button at the top-right corner of the table -->
+      <div class="mb-4 flex justify-end">
+        <button @click="$emit('goto', 'expert-add-param')" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
+          New
+        </button>
+      </div>
+      <!-- Table with dummy data -->
+      <div class="flex-1 overflow-auto">
+        <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
+          <thead class="bg-gray-100 text-gray-800">
+            <tr>
+              <th class="p-3 text-left">Parameter</th>
+              <th class="p-3 text-left">Value</th>
+              <th class="p-3 text-left"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(parameter, index) in parameters" :key="index" class="border-b">
+              <td class="p-3">{{ parameter.name }}</td>
+              <td class="p-3">
+                <ul>
+                  <li v-for="(value, idx) in parameter.values" :key="idx">{{ value }}</li>
+                </ul>
+              </td>
+              <td class="p-3 flex justify-end space-x-2">
+                <button @click="editParameter(index)" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                  Edit
+                </button>
+                <button @click="deleteParameter(index)" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
   </div>
 </template>
 
 <style scoped>
-/* Add any scoped styles here if needed */
+/* Optional scoped styles */
 </style>
