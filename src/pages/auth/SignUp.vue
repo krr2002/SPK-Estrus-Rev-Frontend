@@ -14,7 +14,7 @@ const signup = () => {
     <!-- Sisi kiri dengan latar belakang biru -->
     <div class="w-1/2 bg-blue-800 flex items-center justify-center">
       <!-- Gambar -->
-      <img src="../assets/Cow.png" alt="Tauri KAK CHIP" class="w-3/4 max-w-sm"/>
+      <img src="../../assets/Cow.png" alt="Tauri KAK CHIP" class="w-3/4 max-w-sm"/>
     </div>
     <!-- Sisi kanan untuk form sign up -->
     <div class="w-1/2 flex flex-col items-center justify-center p-6">

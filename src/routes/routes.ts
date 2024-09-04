@@ -1,6 +1,6 @@
 import Dashboard from '../pages/Dashboard.vue'
-import Login from '../pages/Login.vue'
-import SignUp from '../pages/SignUp.vue'
+import Login from '../pages/auth/Login.vue'
+import SignUp from '../pages/auth/SignUp.vue'
 import {authRouter} from '../libs/middleware.ts'
 
 

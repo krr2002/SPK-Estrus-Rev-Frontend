@@ -1,12 +1,22 @@
 <script setup lang="ts">
-const emit = defineEmits<{
-  (e: 'goto', route: string): void;
-}>();
+  import {reactive} from "vue"
+  import {useRouter} from 'vue-router'
+  import {AuthToken} from "../../utils/auth.ts"
+  import {login as facLogin} from "../../factories/auth.ts";
 
-const login = () => {
-  // Fungsi login yang dipanggil saat tombol login ditekan
-  emit('goto', 'admin');
-};
+  const logingForm = reactive()
+
+  const router = useRouter()
+  const login = async () => {
+    // Fungsi login yang dipanggil saat tombol login ditekan
+    try {
+      const res = await facLogin()
+      AuthToken.set()
+      router.push('/')
+    } catch (err) {
+      console.log(err)
+    }
+  }
 </script>
 
 <template>
@@ -14,7 +24,7 @@ const login = () => {
     <!-- Sisi kiri dengan latar belakang biru -->
     <div class="flex-1 bg-blue-800 flex items-center justify-center">
       <!-- Gambar -->
-      <img src="../assets/Cow.png" alt="Tauri KAK CHIP" class="w-3/4 max-w-md"/>
+      <img src="../../assets/Cow.png" alt="Tauri KAK CHIP" class="w-3/4 max-w-md object-fit"/>
     </div>
     <!-- Sisi kanan untuk form login -->
     <div class="flex-1 flex flex-col items-center justify-center">
@@ -47,10 +57,3 @@ const login = () => {
     </div>
   </section>
 </template>
-
-<style scoped>
-/* Customize the image and form styles as needed */
-img {
-  object-fit: cover;
-}
-</style>

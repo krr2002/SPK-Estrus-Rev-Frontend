@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import "./style/main.css"
-  import Login from './pages/Login.vue'
+  import Login from './pages/auth/Login.vue'
   import {ref} from 'vue'
   import Dashboard from './pages/Dashboard.vue'
   import InputVariabel from "./pages/InputVariabel.vue"
@@ -21,7 +21,7 @@
   import ExpertParameter from "./pages/ExpertParameter.vue"
   import ExpertReport from "./pages/ExpertReport.vue"
   import ExpertRiwayatKonsultasi from "./pages/ExpertRiwayatKonsultasi.vue"
-  import SignUp from "./pages/SignUp.vue"
+  import SignUp from "./pages/auth/SignUp.vue"
   import ForgotPassword from "./pages/ForgotPassword.vue"
   import ExpertProfil from "./pages/ExpertProfil.vue"
   import AdminParam from "./pages/AdminParam.vue"
@@ -32,9 +32,11 @@
   import AdminAddBasis from "./pages/AdminAddBasis.vue"
   import AdminAddParam from "./pages/AdminAddParam.vue"
   import AdminAddTernak from "./pages/AdminAddTernak.vue"
+  import {Vardec} from "./utils/vardec.ts";
 
   const routeName = ref('')
 
+  Vardec.init('../config/config.local.json')
   const changeRoute = (name: string) => {
     routeName.value = name
   }
