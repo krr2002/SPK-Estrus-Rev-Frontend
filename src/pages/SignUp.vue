@@ -1,11 +1,43 @@
 <script setup lang="ts">
+import axios from 'axios';
+import { ref } from 'vue';
+
+// Emit untuk navigasi
 const emit = defineEmits<{
   (e: 'goto', route: string): void;
 }>();
 
-const signup = () => {
-  // Function called when the Sign-Up button is pressed
-  emit('goto', 'signup-success'); // Replace 'signup-success' with the desired route after successful sign-up
+// State untuk form data
+const formData = ref({
+  NIK: '',
+  Nama: '',
+  Email: '',
+  NoHP: '',
+  Alamat: '',
+  Distrik: '',
+  Kelurahan: '',
+  // tambahkan field lain sesuai kebutuhan
+});
+
+// Fungsi untuk submit form
+const signup = async () => {
+  try {
+    // Tambahkan kode negara ke nomor HP
+    const phoneNumber = `+62${formData.value.NoHP}`;
+    const dataToSend = { ...formData.value, NoHP: phoneNumber };
+
+    const response = await axios.post('http://116.193.191.184:3030/v1/auth/register/user', dataToSend);
+    console.log('Pendaftaran user berhasil:', response.data);
+    emit('goto', 'signup-success');
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Pendaftaran user gagal:', error.response?.data || error.message);
+    } else if (error instanceof Error) {
+      console.error('Pendaftaran user gagal:', error.message);
+    } else {
+      console.error('Pendaftaran user gagal:', error);
+    }
+  }
 };
 </script>
 
@@ -25,10 +57,12 @@ const signup = () => {
           <label for="nik" class="text-sm">NIK:</label>
           <input
             id="nik"
-            type="number"
+            v-model="formData.NIK"
+            type="text"
             placeholder="NIK"
             maxlength="16"
             class="px-3 py-2 rounded border border-gray-300 text-sm"
+            required
           />
         </div>
         <!-- Input Nama -->
@@ -36,9 +70,11 @@ const signup = () => {
           <label for="nama" class="text-sm">Nama:</label>
           <input
             id="nama"
+            v-model="formData.Nama"
             type="text"
             placeholder="Nama"
             class="px-3 py-2 rounded border border-gray-300 text-sm"
+            required
           />
         </div>
         <!-- Input Email -->
@@ -46,30 +82,39 @@ const signup = () => {
           <label for="email" class="text-sm">Email:</label>
           <input
             id="email"
+            v-model="formData.Email"
             type="email"
             placeholder="Email"
             class="px-3 py-2 rounded border border-gray-300 text-sm"
+            required
           />
         </div>
         <!-- Input No HP -->
         <div class="flex flex-col">
           <label for="nohp" class="text-sm">No HP:</label>
-          <input
-            id="nohp"
-            type="number"
-            placeholder="No HP"
-            maxlength="12"
-            class="px-3 py-2 rounded border border-gray-300 text-sm"
-          />
+          <div class="flex">
+            <span class="px-3 py-2 bg-gray-200 border border-gray-300 rounded-l text-sm">+62</span>
+            <input
+              id="nohp"
+              v-model="formData.NoHP"
+              type="text"
+              placeholder="Nomor HP"
+              maxlength="11"
+              class="px-3 py-2 rounded-r border border-gray-300 text-sm"
+              required
+            />
+          </div>
         </div>
         <!-- Input Alamat -->
         <div class="flex flex-col">
           <label for="alamat" class="text-sm">Alamat:</label>
           <textarea
             id="alamat"
+            v-model="formData.Alamat"
             placeholder="Alamat"
             rows="2"
             class="px-3 py-2 rounded border border-gray-300 text-sm"
+            required
           ></textarea>
         </div>
         <!-- Input Distrik -->
@@ -77,9 +122,11 @@ const signup = () => {
           <label for="distrik" class="text-sm">Distrik:</label>
           <input
             id="distrik"
+            v-model="formData.Distrik"
             type="text"
             placeholder="Distrik"
             class="px-3 py-2 rounded border border-gray-300 text-sm"
+            required
           />
         </div>
         <!-- Input Kelurahan -->
@@ -87,9 +134,11 @@ const signup = () => {
           <label for="kelurahan" class="text-sm">Kelurahan:</label>
           <input
             id="kelurahan"
+            v-model="formData.Kelurahan"
             type="text"
             placeholder="Kelurahan"
             class="px-3 py-2 rounded border border-gray-300 text-sm"
+            required
           />
         </div>
         <!-- Tombol sign up -->
