@@ -1,5 +1,5 @@
 import Login from '@/pages/auth/Login.vue'
-import SignUp from '@/pages/auth/SignUp.vue'
+import SignUp from '@/pages/auth/Register.vue'
 
 
 export const authRoutes = [

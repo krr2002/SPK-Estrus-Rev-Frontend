@@ -1,13 +1,17 @@
-import Dashboard from '../pages/Dashboard.vue'
-import Report from '../pages/Report.vue'
-import Account from '../pages/accounts/Account.vue'
-import {authRouter} from '../libs/middleware.ts'
+import Dashboard from '@/pages/Dashboard.vue'
+import Report from '@/pages/Report.vue'
+import History from '@/pages/History.vue'
+import {authRouter} from '@/libs/middleware.ts'
 import {authRoutes} from './auth.ts'
+import {accountMgmtRoutes} from '@/routes/account-management.ts'
+import {farmMgmtRoutes} from '@/routes/farm-management.ts'
 
 
 export const routes = [
   { path: '/', component: Dashboard, beforeEnter: authRouter },
   { path: '/report', component: Report, beforeEnter: authRouter },
-  { path: '/account-management', component: Account, beforeEnter: authRouter },
-  ...authRoutes
+  { path: '/activity', component: History, beforeEnter: authRouter },
+  ...authRoutes,
+  ...accountMgmtRoutes,
+  ...farmMgmtRoutes,
 ]

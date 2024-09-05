@@ -10,9 +10,14 @@ const queryParamSetter = (query: any) => {
 
 export const postData = async (url: string, payload: object, query: Object = {}) => {
   if (query && JSON.stringify(query) !== '{}') url = queryParamSetter(query)
-  const res = await axios.post(url, payload)
-  if (res.status >= 200 && res.status < 300) {
-    return res.data
-  }
+  const res = await axios.post(url, payload, {validateStatus: () => true})
+  if (res.status >= 200 && res.status < 300) return res.data
+  throw res.data
+}
+
+export const getData = async (url: string, query: Object = {}) => {
+  if (query && JSON.stringify(query) !== '{}') url = queryParamSetter(query)
+  const res = await axios.get(url, {validateStatus: () => true})
+  if (res.status >= 200 && res.status < 300) return res.data
   throw res.data
 }

@@ -22,9 +22,6 @@ const apiUrl = import.meta.env.VITE_API_URL + '/auth'
 export const registerUser = async (payload: RegisterType) => {
   return await postData(`${apiUrl}/register/user`, payload)
 }
-export const registerAdmin = async (payload: RegisterType) => {
-  return await postData(`${apiUrl}/register/admin`, payload)
-}
 export const registerExpert = async (payload: RegisterType) => {
   return await postData(`${apiUrl}/register/expert`, payload)
 }

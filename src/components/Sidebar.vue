@@ -2,6 +2,7 @@
   import {AuthToken} from '../utils/auth.ts'
   import {useRouter} from 'vue-router'
   import {onMounted, reactive, ref} from 'vue'
+  import {ROLE_ADMIN, ROLE_EXPERT, ROLE_USER} from '@/libs/const.ts'
 
 
   const router = useRouter()
@@ -11,18 +12,18 @@
   }
 
   const navList = ref([
-    {text: 'Dashboard', routePath: '/', accessGroup: ['USER', 'ADMIN', 'EXPERT']},
-    {text: 'Manajemen Akun', routePath: '/account-management', accessGroup: ['ADMIN']},
-    {text: 'Manajemen Ternak', routePath: '/farm-management', accessGroup: ['ADMIN', 'EXPERT']},
-    {text: 'Manajemen Parameter', routePath: '/param-management', accessGroup: ['ADMIN', 'EXPERT']},
-    {text: 'Manajemen Basis Aturan', routePath: '/rule-management', accessGroup: ['ADMIN', 'EXPERT']},
-    {text: 'Riwayat Konsultasi', routePath: '/dss-history', accessGroup: ['USER', 'ADMIN', 'EXPERT']},
-    {text: 'Report', routePath: '/report', accessGroup: ['USER', 'ADMIN', 'EXPERT']},
+    {text: 'Dashboard', routePath: '/', accessGroup: [ROLE_USER, ROLE_ADMIN, ROLE_EXPERT]},
+    {text: 'Manajemen Akun', routePath: '/account-management', accessGroup: [ROLE_ADMIN]},
+    {text: 'Manajemen Ternak', routePath: '/farm-management', accessGroup: [ROLE_USER, ROLE_ADMIN, ROLE_EXPERT]},
+    {text: 'Manajemen Parameter', routePath: '/param-management', accessGroup: [ROLE_ADMIN, ROLE_EXPERT]},
+    {text: 'Manajemen Basis Aturan', routePath: '/rule-management', accessGroup: [ROLE_ADMIN, ROLE_EXPERT]},
+    {text: 'Riwayat Aktifitas', routePath: '/activity', accessGroup: [ROLE_USER, ROLE_ADMIN, ROLE_EXPERT]},
+    {text: 'Report', routePath: '/report', accessGroup: [ROLE_USER, ROLE_ADMIN, ROLE_EXPERT]},
   ])
 
   onMounted(() => {
     navList.value= navList.value.filter((nav) => {
-      return nav.accessGroup.includes(AuthToken.getData('roleName'))
+      return nav.accessGroup.includes(AuthToken.getData('roleId').toLowerCase().replaceAll('-', ''))
     })
   })
 </script>
