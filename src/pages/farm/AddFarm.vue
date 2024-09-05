@@ -1,0 +1,57 @@
+<script setup lang="ts">
+  import { ref } from 'vue'
+  import Sidebar from '@/components/Sidebar.vue'
+
+  // State for cattle data
+  const namaSapi = ref('')
+  const umurSapi = ref('')
+
+  // Function to handle form submission
+  const addCattle = () => {
+    if (namaSapi.value && umurSapi.value) {
+      // Handle adding the cattle data (e.g., saving to a database or state)
+      console.log('Nama Sapi:', namaSapi.value)
+      console.log('Umur Sapi:', umurSapi.value)
+
+      // Reset form
+      namaSapi.value = ''
+      umurSapi.value = ''
+    }
+  }
+
+  // Function to handle navigation
+  const emit = defineEmits<{
+    (e: 'goto', route: string): void
+  }>()
+</script>
+
+<template>
+  <main class="w-full min-h-screen bg-gray-100 flex">
+    <Sidebar />
+    <section class="p-6 flex-1 flex flex-col">
+      <h1 class="text-3xl font-bold text-gray-900 mb-4">Add Ternak</h1>
+      <form @submit.prevent="addCattle" class="space-y-4">
+        <!-- Nama Sapi Input -->
+        <div>
+          <label class="block text-gray-700">Nama Sapi:</label>
+          <input v-model="namaSapi" type="text" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
+        </div>
+
+        <!-- Umur Sapi Input -->
+        <div>
+          <label class="block text-gray-700">Umur Sapi:</label>
+          <input v-model.number="umurSapi" type="number" min="0" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="bg-sky-800 hover:bg-sky-900 text-white px-4 py-2 rounded">
+          Submit
+        </button>
+      </form>
+    </section>
+  </main>
+</template>
+
+<style scoped>
+/* Add any scoped styles here if needed */
+</style>
