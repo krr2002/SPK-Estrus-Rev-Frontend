@@ -1,4 +1,3 @@
-import {Vardec} from '../utils/vardec.ts'
 import {postData} from '../libs/axios.ts'
 
 type RegisterType = {
@@ -13,7 +12,12 @@ type RegisterType = {
   confirmPassword: string
 }
 
-const apiUrl = `${Vardec.getString("application.apiUrl")}/auth`
+type LoginType = {
+  credential: string
+  password: string
+}
+
+const apiUrl = import.meta.env.VITE_API_URL + '/auth'
 
 export const registerUser = async (payload: RegisterType) => {
   return await postData(`${apiUrl}/register/user`, payload)
@@ -24,6 +28,6 @@ export const registerAdmin = async (payload: RegisterType) => {
 export const registerExpert = async (payload: RegisterType) => {
   return await postData(`${apiUrl}/register/expert`, payload)
 }
-export const login = async (payload: RegisterType) => {
+export const login = async (payload: LoginType) => {
   return await postData(`${apiUrl}/login`, payload)
 }

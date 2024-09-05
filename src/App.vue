@@ -1,45 +1,5 @@
 <script setup lang="ts">
   import "./style/main.css"
-  import Login from './pages/auth/Login.vue'
-  import {ref} from 'vue'
-  import Dashboard from './pages/Dashboard.vue'
-  import InputVariabel from "./pages/InputVariabel.vue"
-  import InputAturan from "./pages/InputAturan.vue"
-  import Profil from "./pages/Profil.vue"
-  import Admin from "./pages/Admin.vue"
-  import AdminAkun from "./pages/AdminAkun.vue"
-  import AdminBasis from "./pages/AdminBasis.vue"
-  import AdminTernak from "./pages/AdminTernak.vue"
-  import AdminRiwayat from "./pages/AdminRiwayat.vue"
-  import AdminReport from "./pages/AdminReport.vue"
-  import Expert from "./pages/Expert.vue"
-  import User from "./pages/User.vue"
-  import UserProfil from "./pages/UserProfil.vue"
-  import UserRiwayat from "./pages/UserRiwayat.vue"
-  import UserTernak from "./pages/UserTernak.vue"
-  import ExpertBasisAturan from "./pages/ExpertBasisAturan.vue"
-  import ExpertParameter from "./pages/ExpertParameter.vue"
-  import ExpertReport from "./pages/ExpertReport.vue"
-  import ExpertRiwayatKonsultasi from "./pages/ExpertRiwayatKonsultasi.vue"
-  import SignUp from "./pages/auth/SignUp.vue"
-  import ForgotPassword from "./pages/ForgotPassword.vue"
-  import ExpertProfil from "./pages/ExpertProfil.vue"
-  import AdminParam from "./pages/AdminParam.vue"
-  import ExpertAddParam from "./pages/ExpertAddParam.vue"
-  import ExpertAddBasis from "./pages/ExpertAddBasis.vue"
-  import UserAddTernak from "./pages/UserAddTernak.vue"
-  import AdminAddAkun from "./pages/AdminAddAkun.vue"
-  import AdminAddBasis from "./pages/AdminAddBasis.vue"
-  import AdminAddParam from "./pages/AdminAddParam.vue"
-  import AdminAddTernak from "./pages/AdminAddTernak.vue"
-  import {Vardec} from "./utils/vardec.ts";
-
-  const routeName = ref('')
-
-  Vardec.init('../config/config.local.json')
-  const changeRoute = (name: string) => {
-    routeName.value = name
-  }
 </script>
 
 <template>
@@ -71,8 +31,6 @@
 <!--    <UserAddTernak v-else-if="routeName === 'user-add-ternak'" @goto="(e : any) => changeRoute(e)"/>-->
 <!--    <InputVariabel v-else-if="routeName === 'input-variabel'" @goto="(e) => changeRoute(e)"/>-->
 <!--    <InputAturan v-else-if="routeName === 'input-aturan'" @goto="(e) => changeRoute(e)"/>-->
-<!--    <SignUp v-else-if="routeName === 'signup'" @goto="(e) => changeRoute(e)"/>-->
 <!--    <ForgotPassword v-else-if="routeName === 'forgot-password'" @goto="(e) => changeRoute(e)"/>-->
 <!--    <Profil v-else-if="routeName === 'profil'" @goto="(e : any) => changeRoute(e)"/>-->
-<!--    <Login v-else @goto="(e) => changeRoute(e)" />-->
 </template>
