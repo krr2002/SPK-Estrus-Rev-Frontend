@@ -12,8 +12,6 @@ export class AuthToken {
     }).join('')
     const decoded = decodeURIComponent(payload)
     this.tokenData = JSON.parse(decoded)
-    console.log(val)
-    console.log(this.tokenData.roleName)
   }
 
   static set = (val: string) => {

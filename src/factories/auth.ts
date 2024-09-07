@@ -1,4 +1,5 @@
-import {postData} from '../libs/axios.ts'
+import {postAuthData, postData} from '../libs/axios.ts'
+
 
 type RegisterType = {
   nik: string
@@ -23,7 +24,7 @@ export const registerUser = async (payload: RegisterType) => {
   return await postData(`${apiUrl}/register/user`, payload)
 }
 export const registerExpert = async (payload: RegisterType) => {
-  return await postData(`${apiUrl}/register/expert`, payload)
+  return await postAuthData(`${apiUrl}/register/expert`, payload)
 }
 export const login = async (payload: LoginType) => {
   return await postData(`${apiUrl}/login`, payload)
