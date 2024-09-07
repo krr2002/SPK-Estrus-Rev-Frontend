@@ -3,7 +3,7 @@ import {delAuthData, getAuthData, postAuthData, putAuthData} from '@/libs/axios.
 
 type UpdateLangType = {
   name: string
-  minValue: number
+  min: number
 }
 type CreateLangType = UpdateLangType & {
   paramId: string

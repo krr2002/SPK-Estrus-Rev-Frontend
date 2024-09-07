@@ -1,125 +1,156 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
-import Sidebar from '@/components/Sidebar.vue'
+  import { ref, computed, watch } from 'vue'
+  import Sidebar from '@/components/Sidebar.vue'
+  import {createLang, deleteLang, updateLang} from '@/factories/linguistic.ts'
+  import {LINGUISTIC, NUMERIC, ROLE_EXPERT, ROLE_USER} from '@/libs/const.ts'
+  import {createParam, updateParam, UpdateParamType} from '@/factories/param.ts'
+  import {useRouter} from 'vue-router'
 
-// State for the form
-const isParameter = ref(true); // Default to Parameter selected
-const isParameterHasil = ref(false);
-const parameterName = ref('');
-const numValues = ref(0);
-const parameterValues = ref<string[]>([]);
-const hasilParameter = ref('');
-
-// Watch the number of values to update the parameterValues array accordingly
-watch(numValues, (newCount) => {
-  // Update the array size to match the number of values
-  parameterValues.value = Array(newCount).fill('');
-});
-
-// Function to handle form submission
-const addParameter = () => {
-  if (parameterName.value && parameterValues.value.length > 0) {
-    // Handle adding the parameter and its values (e.g., saving to a database or state)
-    console.log('Parameter Name:', parameterName.value);
-    console.log('Values:', parameterValues.value);
-
-    // Reset form
-    parameterName.value = '';
-    numValues.value = 0;
-    parameterValues.value = [];
+  type FuzzySetType = {
+    id: string
+    name: string
+    min: number
   }
-};
 
-const addParameterHasil = () => {
-  if (hasilParameter.value) {
-    // Handle adding the parameter hasil (e.g., saving to a database or state)
-    console.log('Parameter Hasil:', hasilParameter.value);
+  const router = useRouter()
 
-    // Reset form
-    hasilParameter.value = '';
+  const editPos = ref<number|undefined>()
+  const fuzzySets = ref<FuzzySetType[]>([])
+  const paramData = ref<UpdateParamType & {id: string}>({
+    id: '',
+    name: '',
+    type: LINGUISTIC,
+    note: '',
+  })
+
+  const addFuzzySet = () => {
+    fuzzySets.value.push({
+      id: '',
+      name: '',
+      min: 0,
+    })
+    editPos.value = fuzzySets.value.length - 1
   }
-};
-
-// Function to handle checkbox changes
-const toggleCheckbox = (type: 'parameter' | 'parameter-hasil') => {
-  if (type === 'parameter') {
-    isParameter.value = true;
-    isParameterHasil.value = false;
-  } else if (type === 'parameter-hasil') {
-    isParameter.value = false;
-    isParameterHasil.value = true;
+  const saveFuzzySet = async (key: number) => {
+    const payload = {
+      name: fuzzySets.value[key].name,
+      min: fuzzySets.value[key].min,
+      paramId: paramData.value.id,
+    }
+    try {
+      let res
+      if (paramData.value.id === '') {
+        await saveParameter(false)
+        payload.paramId = paramData.value.id
+      }
+      if (fuzzySets.value[key].id === '') {
+        res = await createLang(payload)
+        fuzzySets.value[key].id = res.data.id
+      } else {
+        res = await updateLang(fuzzySets.value[key].id, payload)
+      }
+      console.log(res.message)
+      editPos.value = undefined
+    } catch (err) {
+      console.error(err)
+    }
   }
-};
-
-// Computed property to enable the submit button
-const isSubmitEnabled = computed(() => {
-  return isParameter.value || isParameterHasil.value;
-});
+  const deleteFuzzySet = async (key: number) => {
+    if (fuzzySets.value[key].id === '') {
+      fuzzySets.value = fuzzySets.value.filter((item) => item !== fuzzySets.value[key])
+      editPos.value = undefined
+      return
+    }
+    try {
+      const res = await deleteLang(fuzzySets.value[key].id)
+      console.log(res.message)
+      editPos.value = undefined
+    } catch (err) {
+      console.error(err)
+    }
+  }
+  const saveParameter = async (finished = true) => {
+    const payload = {
+      name: paramData.value.name,
+      type: paramData.value.type,
+      note: paramData.value.note,
+    }
+    try {
+      let res
+      if (paramData.value.id === '') {
+        res = await createParam(payload)
+        paramData.value.id = res.data.id
+      } else {
+        res = await updateParam(paramData.value.id, payload)
+      }
+      console.log(res.message)
+    } catch (err) {
+      console.error(err)
+    }
+    if (finished) return router.push('/param-management')
+  }
 </script>
 
 <template>
   <main class="w-full min-h-screen bg-gray-100 flex">
     <Sidebar />
     <section class="p-6 flex-1 flex flex-col">
-      <h1 class="text-3xl font-bold text-gray-900 mb-4">Add New Basis Aturan</h1>
-      <form @submit.prevent="isParameter ? addParameter() : addParameterHasil()" class="space-y-4">
-        <!-- Checkboxes -->
-        <div class="flex items-center space-x-4">
-          <div>
-            <input 
-              type="checkbox" 
-              id="parameter" 
-              v-model="isParameter" 
-              @change="toggleCheckbox('parameter')" 
-              :checked="isParameter"
-            />
-            <label for="parameter" class="ml-2 text-gray-700">Parameter</label>
-          </div>
-          <div>
-            <input 
-              type="checkbox" 
-              id="parameter-hasil" 
-              v-model="isParameterHasil" 
-              @change="toggleCheckbox('parameter-hasil')" 
-              :checked="isParameterHasil"
-            />
-            <label for="parameter-hasil" class="ml-2 text-gray-700">Parameter Hasil</label>
-          </div>
-        </div>
-
+      <h1 class="text-3xl font-bold text-gray-900 mb-4">Parameter</h1>
+      <div class="space-y-4">
         <!-- Conditional Parameter Inputs -->
-        <div v-if="isParameter">
-          <div>
-            <label class="block text-gray-700">Parameter Name:</label>
-            <input v-model="parameterName" type="text" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
+        <div class="mb-16">
+          <div class="mb-4">
+            <label>
+              <p class="block text-gray-700">Nama Parameter:</p>
+              <input v-model="paramData.name" type="text" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
+            </label>
           </div>
-
-          <div>
-            <label class="block text-gray-700">Number of Values:</label>
-            <input v-model.number="numValues" type="number" min="0" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
+          <div class="mb-4">
+            <label>
+              <p class="block text-gray-700">Tipe Parameter (Tipe yang muncul saat input fakta):</p>
+              <select v-model="paramData.type" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+                <option :value="LINGUISTIC">Linguistik</option>
+                <option :value="NUMERIC">Numerik</option>
+              </select>
+            </label>
           </div>
-
-          <div>
-            <label class="block text-gray-700">Values:</label>
-            <div v-for="(value, index) in parameterValues" :key="index" class="flex items-center space-x-2 mb-2">
-              <input v-model="parameterValues[index]" type="text" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" placeholder="" />
+          <div class="mb-4">
+            <label>
+              <p class="block text-gray-700">Catatan (Opsional, sebagai pentunjuk penginputan fakta):</p>
+              <textarea v-model="paramData.note" rows="3" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
+            </label>
+          </div>
+          <div v-for="(item, key) in fuzzySets" :key="key" class="mb-4 flex items-end gap-16">
+            <label>
+              <p class="block text-gray-700">Atribut Linguistik:</p>
+              <input :disabled="editPos !== key" v-model="item.name" type="text" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
+            </label>
+            <label>
+              <p class="block text-gray-700">Atribut Numerik:</p>
+              <input :disabled="editPos !== key" v-model="item.min" type="number" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
+            </label>
+            <div class="flex gap-4">
+              <button v-if="editPos === key" @click="saveFuzzySet(key)" class="bg-sky-800 hover:bg-sky-900 text-white px-4 py-2 rounded">
+                Simpan
+              </button>
+              <button v-else @click="saveFuzzySet(key)" class="bg-sky-800 hover:bg-sky-900 text-white px-4 py-2 rounded">
+                Edit
+              </button>
+              <button @click="deleteFuzzySet(key)" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
+                Hapus
+              </button>
             </div>
           </div>
-        </div>
-
-        <!-- Conditional Parameter Hasil Input -->
-        <div v-if="isParameterHasil">
-          <div>
-            <label class="block text-gray-700">Parameter Hasil:</label>
-            <input v-model="hasilParameter" type="text" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
-          </div>
+          <button @click="addFuzzySet" type="button" class="bg-sky-800 hover:bg-sky-900 text-white px-4 py-2 rounded">
+            Tambah Himpunan Fuzzy
+          </button>
         </div>
 
         <!-- Submit Button -->
-        <button type="submit" class="bg-sky-800 hover:bg-sky-900 text-white px-4 py-2 rounded">
-          Submit
+        <button v-if="!editPos" @click="saveParameter" type="button" class="bg-sky-800 hover:bg-sky-900 text-white px-4 py-2 rounded">
+          Simpan Parameter
         </button>
-      </form>
+      </div>
     </section>
   </main>
 </template>

@@ -85,7 +85,7 @@ import {getById, updateUser} from '@/factories/user.ts'
 
         <!-- Role Dropdown -->
         <label v-if="!route.params.id">
-          <label class="block text-gray-700">Role:</label>
+          <p class="block text-gray-700">Role:</p>
           <select v-model="role" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
             <option :value="ROLE_USER">User</option>
             <option :value="ROLE_EXPERT">Expert</option>
@@ -118,7 +118,7 @@ import {getById, updateUser} from '@/factories/user.ts'
 
         <!-- Confirm Password Input -->
         <label v-if="!route.params.id">
-          <label class="block text-gray-700">Konfirmasi Password:</label>
+          <p class="block text-gray-700">Konfirmasi Password:</p>
           <input v-model="registerForm.confirmPassword" type="password" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
         </label>
 
