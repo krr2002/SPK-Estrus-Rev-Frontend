@@ -1,10 +1,10 @@
 <script setup lang="ts">
-  import { ref, computed, watch } from 'vue'
+  import {ref, onMounted} from 'vue'
   import Sidebar from '@/components/Sidebar.vue'
-  import {createLang, deleteLang, updateLang} from '@/factories/linguistic.ts'
+  import {createLang, deleteLang, getAllByParamId, updateLang} from '@/factories/linguistic.ts'
   import {LINGUISTIC, NUMERIC, ROLE_EXPERT, ROLE_USER} from '@/libs/const.ts'
-  import {createParam, updateParam, UpdateParamType} from '@/factories/param.ts'
-  import {useRouter} from 'vue-router'
+  import {createParam, getByParamId, updateParam, UpdateParamType} from '@/factories/param.ts'
+  import {useRoute, useRouter} from 'vue-router'
 
   type FuzzySetType = {
     id: string
@@ -12,7 +12,8 @@
     min: number
   }
 
-  const router = useRouter()
+const router = useRouter()
+const route = useRoute()
 
   const editPos = ref<number|undefined>()
   const fuzzySets = ref<FuzzySetType[]>([])
@@ -23,6 +24,22 @@
     note: '',
   })
 
+  onMounted(() => {
+    if (route.params.id) return init()
+  })
+
+  const init = async () => {
+    console.log('masuk sini')
+    try {
+      const res = await getByParamId(route.params.id as string)
+      paramData.value = res.data
+      const langData = await getAllByParamId(route.params.id as string)
+      fuzzySets.value = langData.data
+      console.log(langData.message)
+    } catch (err) {
+      console.error(err)
+    }
+  }
   const addFuzzySet = () => {
     fuzzySets.value.push({
       id: '',

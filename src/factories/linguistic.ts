@@ -8,11 +8,26 @@ type UpdateLangType = {
 type CreateLangType = UpdateLangType & {
   paramId: string
 }
+export type DSSAllDataType = {
+  langId: string
+  langName: string
+  paramId: string
+  paramName:string
+}
+export type LangResponseDTO = {
+  id: string
+  paramId: string
+  name: string
+  minValue: number
+}
 
 const apiUrl = import.meta.env.VITE_API_URL + '/lang-management'
 
 export const createLang = async (payload: CreateLangType) => {
   return await postAuthData(`${apiUrl}`, payload)
+}
+export const getLangByIds = async (payload: { ids: string[] }) => {
+  return await postAuthData(`${apiUrl}/ids`, payload)
 }
 export const getAllByParamId = async (paramId: string) => {
   return await getAuthData(`${apiUrl}/${paramId}`)

@@ -6,6 +6,10 @@ export type UpdateParamType = {
   name: string
   note?: string
 }
+export type DSSParamType = {
+  id: string
+  name: string
+}
 
 const apiUrl = import.meta.env.VITE_API_URL + '/param-management'
 

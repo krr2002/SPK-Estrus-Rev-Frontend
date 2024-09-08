@@ -1,13 +1,8 @@
 <script setup lang="ts">
   import {onMounted, ref} from 'vue'
   import Sidebar from '@/components/Sidebar.vue'
-  import {deleteParam, getAllParam} from '@/factories/param.ts'
+  import {deleteParam, DSSParamType, getAllParam} from '@/factories/param.ts'
 
-
-  type DSSParamType = {
-    id: string
-    name: string
-  }
 
   const dssParams = ref<DSSParamType[]>([])
 

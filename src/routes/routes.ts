@@ -6,6 +6,7 @@ import {authRoutes} from './auth.ts'
 import {accountMgmtRoutes} from '@/routes/account-management.ts'
 import {farmMgmtRoutes} from '@/routes/farm-management.ts'
 import {paramMgmtRoutes} from '@/routes/param-management.ts'
+import {ruleMgmtRoutes} from '@/routes/rule-management.ts'
 
 
 export const routes = [
@@ -16,4 +17,5 @@ export const routes = [
   ...accountMgmtRoutes,
   ...farmMgmtRoutes,
   ...paramMgmtRoutes,
+  ...ruleMgmtRoutes,
 ]
