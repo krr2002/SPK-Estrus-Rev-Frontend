@@ -4,7 +4,7 @@ import {getAuthData, postAuthData} from '@/libs/axios.ts'
 export type DSSRunDataType = {
   specimenName: string
   age: number
-  conditions: object
+  conditions: string[]
 }
 type ParamOptionDataType = {
   id: string

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import {onMounted, ref, watch} from 'vue'
+  import {onMounted, ref} from 'vue'
   import Sidebar from '@/components/Sidebar.vue'
   import {DSSParamType, getAllParam} from '@/factories/param.ts'
   import {createRule, getRuleById, RuleDataType, updateRule} from '@/factories/rule.ts'

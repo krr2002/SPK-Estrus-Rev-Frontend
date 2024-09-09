@@ -7,7 +7,7 @@
 
 
   const rules = ref<RuleDataType[]>([])
-  const langs = ref<object>({})
+  const langs = ref<any>({})
 
   onMounted(async () => {
     const res = await getAllRules()
@@ -30,10 +30,11 @@
     return arr.join(` ${operator} `)
   }
 
-  const delRule = async (id: string) => {
+  const delRule = async (key: number) => {
     try {
-      const res = await deleteRule(id)
+      const res = await deleteRule(rules.value[key].id)
       console.log(res.message)
+      rules.value.filter((_, idx) => idx !== key)
     } catch (err) {
       console.error(err)
     }
@@ -70,7 +71,7 @@
                 <RouterLink :to="`/rule-management/edit/${item.id}`" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
                   Edit
                 </RouterLink>
-                <button @click="delRule" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
+                <button @click="() => delRule(index)" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
                   Delete
                 </button>
               </td>

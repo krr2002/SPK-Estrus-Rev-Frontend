@@ -2,7 +2,7 @@
   import {ref, onMounted} from 'vue'
   import Sidebar from '@/components/Sidebar.vue'
   import {createLang, deleteLang, getAllByParamId, updateLang} from '@/factories/linguistic.ts'
-  import {LINGUISTIC, NUMERIC, ROLE_EXPERT, ROLE_USER} from '@/libs/const.ts'
+  import {LINGUISTIC, NUMERIC} from '@/libs/const.ts'
   import {createParam, getByParamId, updateParam, UpdateParamType} from '@/factories/param.ts'
   import {useRoute, useRouter} from 'vue-router'
 
@@ -164,7 +164,7 @@ const route = useRoute()
         </div>
 
         <!-- Submit Button -->
-        <button v-if="!editPos" @click="saveParameter" type="button" class="bg-sky-800 hover:bg-sky-900 text-white px-4 py-2 rounded">
+        <button v-if="!editPos" @click="() => saveParameter(true)" type="button" class="bg-sky-800 hover:bg-sky-900 text-white px-4 py-2 rounded">
           Simpan Parameter
         </button>
       </div>

@@ -1,10 +1,10 @@
 <script setup lang="ts">
   import {onMounted, ref} from 'vue'
   import Sidebar from '@/components/Sidebar.vue'
-  import {DSSParamDataType, getAllDssParams, run} from '@/factories/dss.ts'
+  import {DSSParamDataType, DSSRunDataType, getAllDssParams, run} from '@/factories/dss.ts'
 
   const params = ref<DSSParamDataType[]>([])
-  const specimen = ref({
+  const specimen = ref<DSSRunDataType>({
     specimenName: '',
     age: 0,
     conditions: [],
@@ -27,8 +27,10 @@
   const numericChanged = (val: string, paramId: string, idx: number) => {
     const valFloat = parseFloat(val.replace(',', '.'))
     const param = params.value.find((item) => item.id === paramId)
+    if (!param) return console.log('param not found')
     const sortedOptions = param.options.sort((a, b) => b.min - a.min)
     const res = sortedOptions.find(option => valFloat >= option.min)
+    if (!res) return console.log('option not found')
     specimen.value.conditions[idx] = res.id
   }
 
@@ -68,7 +70,7 @@
         <div v-for="(param, key) in params" :key="key">
           <label>
             <p class="block text-gray-700">{{ param.name }}:</p>
-            <input v-if="param.type === 'NUMERIC'" @change="(e) => numericChanged(e.target.value, param.id, key)" type="number" min="0" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
+            <input v-if="param.type === 'NUMERIC'" @change="(e: any) => numericChanged(e.target.value, param.id, key)" type="number" min="0" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
             <select v-else v-model="specimen.conditions[key]" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
               <option v-for="item in param.options.sort((a, b) => b.min - a.min)" :key="item.id" :value="item.id">{{ item.name }}</option>
             </select>

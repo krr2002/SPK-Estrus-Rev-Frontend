@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import {ref, computed, onMounted} from 'vue'
+  import {ref, onMounted} from 'vue'
   import Sidebar from '@/components/Sidebar.vue'
   import {AuthToken} from '@/utils/auth.ts'
   import {ROLE_ADMIN} from '@/libs/const.ts'
@@ -61,7 +61,7 @@
             <td class="p-3">{{ ternak.dssResult }}</td>
             <td class="p-3 flex justify-end">
               <!-- Actions Buttons -->
-              <button v-if="isAdmin" form class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
+              <button v-if="isAdmin" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
                 Delete
               </button>
             </td>

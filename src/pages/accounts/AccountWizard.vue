@@ -49,7 +49,7 @@ import {getById, updateUser} from '@/factories/user.ts'
       }
       console.log(res.message)
       return router.push('/account-management')
-    } catch (err) {
+    } catch (err: any) {
       console.error(err.message)
     }
   }
@@ -60,7 +60,7 @@ import {getById, updateUser} from '@/factories/user.ts'
       const res = await updateUser(route.params.id as string, registerForm.value)
       console.log(res.message)
       return router.push('/account-management')
-    } catch (err) {
+    } catch (err: any) {
       console.error(err.message)
     }
   }

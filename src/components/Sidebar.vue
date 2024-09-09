@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import {AuthToken} from '../utils/auth.ts'
   import {useRouter} from 'vue-router'
-  import {onMounted, reactive, ref} from 'vue'
+  import {onMounted, ref} from 'vue'
   import {ROLE_ADMIN, ROLE_EXPERT, ROLE_USER} from '@/libs/const.ts'
 
 
