@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import {onMounted, ref} from 'vue'
   import Sidebar from '@/components/Sidebar.vue'
-  import {DSSParamDataType, getAllDssParams} from '@/factories/dss.ts'
+  import {DSSParamDataType, getAllDssParams, run} from '@/factories/dss.ts'
 
   const params = ref<DSSParamDataType[]>([])
   const specimen = ref({
@@ -9,6 +9,7 @@
     age: 0,
     conditions: [],
   })
+  const result = ref('')
 
   onMounted(() => {
     return init()
@@ -23,10 +24,22 @@
     }
   }
 
-  const numericChanged = (val: string, paramId: string) => {
+  const numericChanged = (val: string, paramId: string, idx: number) => {
     const valFloat = parseFloat(val.replace(',', '.'))
     const param = params.value.find((item) => item.id === paramId)
-    console.log(param)
+    const sortedOptions = param.options.sort((a, b) => b.min - a.min)
+    const res = sortedOptions.find(option => valFloat >= option.min)
+    specimen.value.conditions[idx] = res.id
+  }
+
+  const runDss = async () => {
+    try {
+      const res = await run(specimen.value)
+      result.value = res.data[0]
+      console.log(res.message)
+    } catch (err) {
+      console.error(err)
+    }
   }
 </script>
 
@@ -55,15 +68,18 @@
         <div v-for="(param, key) in params" :key="key">
           <label>
             <p class="block text-gray-700">{{ param.name }}:</p>
-            <input v-if="param.type === 'NUMERIC'" @change="(e) => numericChanged(e.target.value, param.id)" type="number" min="0" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
+            <input v-if="param.type === 'NUMERIC'" @change="(e) => numericChanged(e.target.value, param.id, key)" type="number" min="0" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
             <select v-else v-model="specimen.conditions[key]" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
-              <option v-for="item in param.options" :key="item.id" :value="item.id">{{ item.name }}</option>
+              <option v-for="item in param.options.sort((a, b) => b.min - a.min)" :key="item.id" :value="item.id">{{ item.name }}</option>
             </select>
           </label>
         </div>
+        <div>
+          <p>Hasil: {{ result }}</p>
+        </div>
 
         <!-- Submit Button -->
-        <button type="submit" class="bg-sky-800 hover:bg-sky-900 text-white px-4 py-2 rounded">
+        <button @click="runDss" type="submit" class="bg-sky-800 hover:bg-sky-900 text-white px-4 py-2 rounded">
           Submit
         </button>
       </section>
