@@ -150,7 +150,7 @@ const route = useRoute()
               <button v-if="editPos === key" @click="saveFuzzySet(key)" class="bg-sky-800 hover:bg-sky-900 text-white px-4 py-2 rounded">
                 Simpan
               </button>
-              <button v-else @click="saveFuzzySet(key)" class="bg-sky-800 hover:bg-sky-900 text-white px-4 py-2 rounded">
+              <button v-else @click="editPos = key" class="bg-sky-800 hover:bg-sky-900 text-white px-4 py-2 rounded">
                 Edit
               </button>
               <button @click="deleteFuzzySet(key)" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">

@@ -1,7 +1,25 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+  import {onMounted, ref} from 'vue'
   import Sidebar from '@/components/Sidebar.vue'
+  import {AuthToken} from '@/utils/auth.ts'
+  import {ROLE_ADMIN} from '@/libs/const.ts'
+  import {getAllHistories, getHistoriesByCreator} from '@/factories/history.ts'
 
+  onMounted(async () => {
+    return init()
+  })
+
+  const init = async () => {
+    try {
+      if (AuthToken.getData('roleName') === ROLE_ADMIN) {
+        await getAllHistories()
+      } else {
+        await getHistoriesByCreator()
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
   // Dummy activity data
   const activities = ref([
     { action: 'Menambah data ternak', timestamp: '2024-08-30 10:30' },
@@ -14,7 +32,7 @@ import { ref } from 'vue';
 </script>
 
 <template>
-  <div class="w-full min-h-screen bg-gray-100 flex">
+  <main class="w-full min-h-screen bg-gray-100 flex">
     <Sidebar />
     <section class="p-6 flex-1">
       <h1 class="text-3xl font-bold text-gray-900 mb-8">Riwayat Aktifitas</h1>
@@ -36,7 +54,7 @@ import { ref } from 'vue';
         </table>
       </div>
     </section>
-  </div>
+  </main>
 </template>
 
 <style scoped>
