@@ -1,7 +1,8 @@
 <script setup lang="ts">
   import {onMounted, ref} from 'vue'
   import Sidebar from '@/components/Sidebar.vue'
-import {getAllNonAdminUsers} from '@/factories/user.ts'
+  import {deleteUser, getAllNonAdminUsers} from '@/factories/user.ts'
+  import {useRouter} from 'vue-router'
 
 
   type UserDataType = {
@@ -9,7 +10,8 @@ import {getAllNonAdminUsers} from '@/factories/user.ts'
     fullName: string
     roleName: string
   }
-  // Dummy data for accounts
+
+  const router = useRouter()
   const accounts = ref<UserDataType[]>([])
 
   onMounted(async () => {
@@ -22,13 +24,19 @@ import {getAllNonAdminUsers} from '@/factories/user.ts'
   })
 
   // Function to handle the edit button click
-  const editAccount = (index: string) => {
-    console.log('Edit Account at index', index)
+  const editAccount = (id: string) => {
+    return router.push(`/account-management/edit/${id}`)
   }
 
   // Function to handle the delete button click
-  const deleteAccount = (index: string) => {
-    accounts.value.splice(index, 1)
+  const deleteAccount = async (id: string) => {
+    try {
+      const res = await deleteUser(id)
+      accounts.value = accounts.value.filter((item) => item.id !== id)
+      console.log(res)
+    } catch (err) {
+      console.error(err)
+    }
   }
 
 </script>
@@ -41,16 +49,16 @@ import {getAllNonAdminUsers} from '@/factories/user.ts'
       <!-- New button at the top-right corner of the table -->
       <div class="mb-4 flex justify-end">
         <RouterLink to="/account-management/add" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
-          New
+          Buat Baru
         </RouterLink>
       </div>
       <!-- Table with dummy data -->
       <div class="flex-1 overflow-auto">
-        <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
+        <table v-if="accounts.length > 0" class="w-full bg-white shadow-md rounded-lg overflow-hidden">
           <thead class="bg-gray-100 text-gray-800">
             <tr>
               <th class="p-3 text-left">Nama Akun</th>
-              <th class="p-3 text-left">Role</th>
+              <th class="p-3 text-left">Hak Akses</th>
               <th class="p-3 text-left"></th>
             </tr>
           </thead>
@@ -64,12 +72,16 @@ import {getAllNonAdminUsers} from '@/factories/user.ts'
                   Edit
                 </button>
                 <button @click="deleteAccount(account.id)" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
-                  Delete
+                  Hapus
                 </button>
               </td>
             </tr>
           </tbody>
         </table>
+        <div v-else class="pt-40 text-center">
+          <p>Mohon maaf, belum ada akun yang terdaftar</p>
+          <p>Silahkan <RouterLink to="/account-management/add" class="text-blue-600">buat akun baru</RouterLink></p>
+        </div>
       </div>
     </section>
   </div>

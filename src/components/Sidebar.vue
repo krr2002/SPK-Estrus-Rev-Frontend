@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import {AuthToken} from '../utils/auth.ts'
   import {useRouter} from 'vue-router'
-  import {onMounted, reactive, ref} from 'vue'
+  import {onMounted, ref} from 'vue'
   import {ROLE_ADMIN, ROLE_EXPERT, ROLE_USER} from '@/libs/const.ts'
 
 
@@ -17,8 +17,8 @@
     {text: 'Manajemen Ternak', routePath: '/farm-management', accessGroup: [ROLE_USER, ROLE_ADMIN, ROLE_EXPERT]},
     {text: 'Manajemen Parameter', routePath: '/param-management', accessGroup: [ROLE_ADMIN, ROLE_EXPERT]},
     {text: 'Manajemen Basis Aturan', routePath: '/rule-management', accessGroup: [ROLE_ADMIN, ROLE_EXPERT]},
-    {text: 'Riwayat Aktifitas', routePath: '/activity', accessGroup: [ROLE_USER, ROLE_ADMIN, ROLE_EXPERT]},
-    {text: 'Report', routePath: '/report', accessGroup: [ROLE_USER, ROLE_ADMIN, ROLE_EXPERT]},
+    // {text: 'Riwayat Aktifitas', routePath: '/activity', accessGroup: [ROLE_USER, ROLE_ADMIN, ROLE_EXPERT]},
+    // {text: 'Report', routePath: '/report', accessGroup: [ROLE_USER, ROLE_ADMIN, ROLE_EXPERT]},
   ])
 
   onMounted(() => {
