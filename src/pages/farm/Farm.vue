@@ -6,7 +6,7 @@
   import {DSSResultDataType, getAllHistories, getHistoriesByCreator} from '@/factories/history.ts'
 
 
-  const isAdmin = AuthToken.getData('roleName') === ROLE_ADMIN
+  const isAdmin = AuthToken.getData('roleId').replaceAll('-', '') === ROLE_ADMIN
 
   const farms = ref<DSSResultDataType[]>([])
 

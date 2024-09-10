@@ -1,4 +1,4 @@
-import Add from '@/pages/farm/AddFarm.vue'
+import Add from '@/pages/farm/FarmWizard.vue'
 import Farm from '@/pages/farm/Farm.vue'
 
 const rootPath = '/farm-management'

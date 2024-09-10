@@ -25,7 +25,7 @@
   const generateLang = (operator: 'AND'|'OR', combo: string[]) => {
     const arr: string[] = []
     for (const item of combo) {
-      arr.push(`${langs.value[item].paramName} ${langs.value[item].langName}`)
+      arr.push(`${langs.value[item]?.paramName} ${langs.value[item]?.langName}`)
     }
     return arr.join(` ${operator} `)
   }
@@ -54,7 +54,7 @@
       </div>
       <!-- Table with dummy data -->
       <div class="flex-1 overflow-auto">
-        <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
+        <table v-if="rules.length > 0" class="w-full bg-white shadow-md rounded-lg overflow-hidden">
           <thead class="bg-gray-100 text-gray-800">
             <tr>
               <th class="p-3 text-left">Basis Aturan</th>
@@ -78,6 +78,10 @@
             </tr>
           </tbody>
         </table>
+        <div v-else class="pt-40 text-center">
+          <p>Mohon maaf, basis aturan belum ada</p>
+          <p>Silahkan <RouterLink to="/farm-management/add" class="text-blue-600">buat kondisi baru</RouterLink></p>
+        </div>
       </div>
     </section>
   </main>

@@ -4,9 +4,10 @@
   import {DSSParamType, getAllParam} from '@/factories/param.ts'
   import {createRule, getRuleById, RuleDataType, updateRule} from '@/factories/rule.ts'
   import {DSSAllDataType, getAllByParamId, getLangByIds, LangResponseDTO} from '@/factories/linguistic.ts'
-  import {useRoute} from 'vue-router'
+  import {useRoute, useRouter} from 'vue-router'
 
 
+  const router = useRouter()
   const route = useRoute()
 
   const editPos = ref<number|null>(null)
@@ -85,6 +86,7 @@
         res = await createRule(payload)
       }
       console.log(res.message)
+      return router.push('/rule-management')
     } catch (err) {
       console.error(err)
     }
