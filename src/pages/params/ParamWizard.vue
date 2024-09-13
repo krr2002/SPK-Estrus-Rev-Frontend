@@ -2,7 +2,7 @@
   import {ref, onMounted} from 'vue'
   import Sidebar from '@/components/Sidebar.vue'
   import {createLang, deleteLang, getAllByParamId, updateLang} from '@/factories/linguistic.ts'
-  import {LINGUISTIC, NUMERIC} from '@/libs/const.ts'
+  import {LINGUISTIC /*, NUMERIC */} from '@/libs/const.ts'
   import {createParam, getByParamId, updateParam, UpdateParamType} from '@/factories/param.ts'
   import {useRoute, useRouter} from 'vue-router'
   import {useToaster} from '@/stores/toaster.ts'
