@@ -55,6 +55,7 @@
     const payload = {
       name: fuzzySets.value[key].name,
       min: fuzzySets.value[key].min,
+      max: fuzzySets.value[key].max,
       paramId: paramData.value.id,
     }
     try {
