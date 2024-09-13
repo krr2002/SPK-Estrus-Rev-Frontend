@@ -4,7 +4,10 @@
   import {AuthToken} from '@/utils/auth.ts'
   import {ROLE_ADMIN} from '@/libs/const.ts'
   import {getAllHistories, getHistoriesByCreator} from '@/factories/history.ts'
+  import {useToaster} from '@/stores/toaster.ts'
 
+
+  const toaster = useToaster()
   onMounted(async () => {
     return init()
   })
@@ -16,8 +19,8 @@
       } else {
         await getHistoriesByCreator()
       }
-    } catch (err) {
-      console.error(err)
+    } catch (err: any) {
+      toaster.notyErr(err.message, err.data)
     }
   }
   // Dummy activity data

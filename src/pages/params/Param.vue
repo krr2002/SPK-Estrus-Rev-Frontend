@@ -2,15 +2,17 @@
   import {onMounted, ref} from 'vue'
   import Sidebar from '@/components/Sidebar.vue'
   import {deleteParam, DSSParamType, getAllParam} from '@/factories/param.ts'
+  import {useToaster} from '@/stores/toaster.ts'
 
 
+  const toaster = useToaster()
   const dssParams = ref<DSSParamType[]>([])
 
   onMounted(async () => {
     try {
       const res = await getAllParam()
       dssParams.value = res.data
-    } catch (err) {
+    } catch (err: any) {
       console.error(err)
     }
   })
@@ -19,9 +21,9 @@
   const deleteParameter = async (key: string) => {
     try {
       const res = await deleteParam(key)
-      console.log(res.message)
-    } catch (err) {
-      console.error(err)
+      toaster.notySuccess(res.message)
+    } catch (err: any) {
+      toaster.notyErr(err.message, err.data)
     }
   }
 </script>

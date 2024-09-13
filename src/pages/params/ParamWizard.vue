@@ -5,6 +5,7 @@
   import {LINGUISTIC, NUMERIC} from '@/libs/const.ts'
   import {createParam, getByParamId, updateParam, UpdateParamType} from '@/factories/param.ts'
   import {useRoute, useRouter} from 'vue-router'
+  import {useToaster} from '@/stores/toaster.ts'
 
   type FuzzySetType = {
     id: string
@@ -12,8 +13,9 @@
     min: number
   }
 
-const router = useRouter()
-const route = useRoute()
+  const router = useRouter()
+  const route = useRoute()
+  const toaster = useToaster()
 
   const editPos = ref<number|undefined>()
   const fuzzySets = ref<FuzzySetType[]>([])
@@ -29,14 +31,13 @@ const route = useRoute()
   })
 
   const init = async () => {
-    console.log('masuk sini')
     try {
       const res = await getByParamId(route.params.id as string)
       paramData.value = res.data
       const langData = await getAllByParamId(route.params.id as string)
       fuzzySets.value = langData.data
-      console.log(langData.message)
-    } catch (err) {
+      toaster.notySuccess(langData.message)
+    } catch (err: any) {
       console.error(err)
     }
   }
@@ -66,10 +67,10 @@ const route = useRoute()
       } else {
         res = await updateLang(fuzzySets.value[key].id, payload)
       }
-      console.log(res.message)
+      toaster.notySuccess(res.message)
       editPos.value = undefined
-    } catch (err) {
-      console.error(err)
+    } catch (err: any) {
+      toaster.notyErr(err.message, err.data)
     }
   }
   const deleteFuzzySet = async (key: number) => {
@@ -80,10 +81,10 @@ const route = useRoute()
     }
     try {
       const res = await deleteLang(fuzzySets.value[key].id)
-      console.log(res.message)
+      toaster.notySuccess(res.message)
       editPos.value = undefined
-    } catch (err) {
-      console.error(err)
+    } catch (err: any) {
+      toaster.notyErr(err.message, err.data)
     }
   }
   const saveParameter = async (finished = true) => {
@@ -100,9 +101,9 @@ const route = useRoute()
       } else {
         res = await updateParam(paramData.value.id, payload)
       }
-      console.log(res.message)
-    } catch (err) {
-      console.error(err)
+      toaster.notySuccess(res.message)
+    } catch (err: any) {
+      toaster.notyErr(err.message, err.data)
     }
     if (finished) return router.push('/param-management')
   }

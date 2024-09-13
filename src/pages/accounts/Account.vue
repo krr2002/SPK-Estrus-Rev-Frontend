@@ -3,6 +3,7 @@
   import Sidebar from '@/components/Sidebar.vue'
   import {deleteUser, getAllNonAdminUsers} from '@/factories/user.ts'
   import {useRouter} from 'vue-router'
+  import {useToaster} from '@/stores/toaster.ts'
 
 
   type UserDataType = {
@@ -12,14 +13,15 @@
   }
 
   const router = useRouter()
+  const toaster = useToaster()
   const accounts = ref<UserDataType[]>([])
 
   onMounted(async () => {
     try {
       const res = await getAllNonAdminUsers()
       accounts.value = res.data
-    } catch (err) {
-      console.error(err)
+    } catch (err: any) {
+      toaster.notyErr(err.message, err.data)
     }
   })
 
@@ -33,9 +35,9 @@
     try {
       const res = await deleteUser(id)
       accounts.value = accounts.value.filter((item) => item.id !== id)
-      console.log(res)
-    } catch (err) {
-      console.error(err)
+      toaster.notySuccess(res.message)
+    } catch (err: any) {
+      toaster.notyErr(err.message, err.data)
     }
   }
 

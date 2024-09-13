@@ -2,8 +2,10 @@
   import {useRouter} from 'vue-router'
   import {registerUser} from '../../factories/auth.ts'
   import {reactive} from 'vue'
+  import {useToaster} from '@/stores/toaster.ts'
 
 
+  const toaster = useToaster()
   const {push} = useRouter()
 
   const registerForm = reactive({
@@ -22,8 +24,8 @@
     try {
       await registerUser(registerForm)
       return push('/login')
-    } catch (err) {
-      console.error(err)
+    } catch (err: any) {
+      toaster.notyErr(err.message, err.data)
     }
   }
 </script>
