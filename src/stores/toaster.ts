@@ -36,7 +36,7 @@ export const useToaster = defineStore('toaster', {
     notyInfo(title: string, message?: any) { this.newNoty({type: 'INFO', title, message}) },
     notySuccess(title: string, message?: any) { this.newNoty({type: 'SUCCESS', title, message}) },
     delNoty(id: number) {
-      this.TOASTS = this.TOASTS.filter((item) => item.id !== id)
+      this.TOASTS = this.TOASTS.filter((item: ToastType) => item.id !== id)
     }
   }
 })

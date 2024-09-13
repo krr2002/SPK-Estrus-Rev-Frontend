@@ -11,6 +11,7 @@
     id: string
     name: string
     min: number
+    max: number
   }
 
   const router = useRouter()
@@ -46,6 +47,7 @@
       id: '',
       name: '',
       min: 0,
+      max: 0,
     })
     editPos.value = fuzzySets.value.length - 1
   }
@@ -144,8 +146,12 @@
               <input :disabled="editPos !== key" v-model="item.name" type="text" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
             </label>
             <label>
-              <p class="block text-gray-700">Atribut Numerik:</p>
+              <p class="block text-gray-700">Nilai minimal:</p>
               <input :disabled="editPos !== key" v-model="item.min" type="number" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
+            </label>
+            <label>
+              <p class="block text-gray-700">Nilai maksimal:</p>
+              <input :disabled="editPos !== key" v-model="item.max" type="number" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
             </label>
             <div class="flex gap-4">
               <button v-if="editPos === key" @click="saveFuzzySet(key)" class="bg-sky-800 hover:bg-sky-900 text-white px-4 py-2 rounded">

@@ -38,6 +38,7 @@
   }
 
   const runDss = async () => {
+    specimen.value.conditions = specimen.value.conditions.filter((item) => item !== '')
     try {
       const res = await run(specimen.value)
       result.value = res.data[0]
@@ -75,6 +76,7 @@
             <p class="block text-gray-700">{{ param.name }}:</p>
             <input v-if="param.type === 'NUMERIC'" @change="(e: any) => numericChanged(e.target.value, param.id, key)" type="number" min="0" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
             <select v-else v-model="specimen.conditions[key]" class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
+              <option value="" selected>Tidak diketahui</option>
               <option v-for="item in param.options.sort((a, b) => b.min - a.min)" :key="item.id" :value="item.id">{{ item.name }}</option>
             </select>
           </label>
