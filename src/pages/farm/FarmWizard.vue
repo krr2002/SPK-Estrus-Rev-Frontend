@@ -2,7 +2,10 @@
   import {onMounted, ref} from 'vue'
   import Sidebar from '@/components/Sidebar.vue'
   import {DSSParamDataType, DSSRunDataType, getAllDssParams, run} from '@/factories/dss.ts'
+  import {useToaster} from '@/stores/toaster.ts'
 
+
+  const toaster = useToaster()
   const params = ref<DSSParamDataType[]>([])
   const specimen = ref<DSSRunDataType>({
     specimenName: '',
@@ -19,7 +22,7 @@
     try {
       const res = await getAllDssParams()
       params.value = res.data
-    } catch (err) {
+    } catch (err: any) {
       console.error(err)
     }
   }
@@ -27,10 +30,10 @@
   const numericChanged = (val: string, paramId: string, idx: number) => {
     const valFloat = parseFloat(val.replace(',', '.'))
     const param = params.value.find((item) => item.id === paramId)
-    if (!param) return console.log('param not found')
+    if (!param) return toaster.notyWarn('INPUT_ERROR', 'param not found')
     const sortedOptions = param.options.sort((a, b) => b.min - a.min)
     const res = sortedOptions.find(option => valFloat >= option.min)
-    if (!res) return console.log('option not found')
+    if (!res) return toaster.notyWarn('INPUT_ERROR', 'option not found')
     specimen.value.conditions[idx] = res.id
   }
 
@@ -38,9 +41,9 @@
     try {
       const res = await run(specimen.value)
       result.value = res.data[0]
-      console.log(res.message)
-    } catch (err) {
-      console.error(err)
+      toaster.notySuccess(res.message)
+    } catch (err: any) {
+      toaster.notyErr(err.message, err.data)
     }
   }
 </script>

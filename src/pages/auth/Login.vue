@@ -3,6 +3,7 @@
   import {useRouter} from 'vue-router'
   import {AuthToken} from "../../utils/auth.ts"
   import {login as facLogin} from "../../factories/auth.ts";
+  import {useToaster} from '@/stores/toaster.ts'
 
   const logingForm = reactive({
     credential: '',
@@ -10,14 +11,16 @@
   })
 
   const router = useRouter()
+  const toaster = useToaster()
+
   const login = async () => {
     // Fungsi login yang dipanggil saat tombol login ditekan
     try {
       const res = await facLogin(logingForm)
       AuthToken.set(res.data.token)
       return router.push('/')
-    } catch (err) {
-      console.log(err)
+    } catch (err: any) {
+      toaster.notyErr(err.message, err.data)
     }
   }
 </script>

@@ -5,8 +5,10 @@
   import {createRule, getRuleById, RuleDataType, updateRule} from '@/factories/rule.ts'
   import {DSSAllDataType, getAllByParamId, getLangByIds, LangResponseDTO} from '@/factories/linguistic.ts'
   import {useRoute, useRouter} from 'vue-router'
+  import {useToaster} from '@/stores/toaster.ts'
 
 
+  const toaster = useToaster()
   const router = useRouter()
   const route = useRoute()
 
@@ -33,26 +35,26 @@
       rule.value = res.data
       const langData = await getLangByIds({ids: rule.value.linguisticCombo})
       combos.value = langData.data
-      console.log(res.message)
-    } catch (err) {
-      console.error(err)
+      toaster.notySuccess(res.message)
+    } catch (err: any) {
+      toaster.notyErr(err.message, err.data)
     }
   }
   const getParams = async () => {
     try {
       const res = await getAllParam()
       params.value = res.data
-    } catch (err) {
-      console.error(err)
+    } catch (err: any) {
+      toaster.notyErr(err.message, err.data)
     }
   }
   const getLangs = async (paramId: string) => {
     try {
       const res = await getAllByParamId(paramId)
       langs.value = res.data
-      console.log(res.message)
-    } catch (err) {
-      console.error(err)
+      toaster.notySuccess(res.message)
+    } catch (err: any) {
+      toaster.notyErr(err.message, err.data)
     }
   }
   const addCombo = () => {
@@ -85,10 +87,10 @@
       } else {
         res = await createRule(payload)
       }
-      console.log(res.message)
+      toaster.notySuccess(res.message)
       return router.push('/rule-management')
-    } catch (err) {
-      console.error(err)
+    } catch (err: any) {
+      toaster.notyErr(err.message, err.data)
     }
   }
 </script>

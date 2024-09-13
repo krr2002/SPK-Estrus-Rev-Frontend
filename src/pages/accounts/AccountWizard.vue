@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import {onMounted, ref} from 'vue'
+  import {onMounted, ref} from 'vue'
   import {ROLE_EXPERT, ROLE_USER} from '@/libs/const.ts'
   import {registerExpert, registerUser} from '@/factories/auth.ts'
   import Sidebar from '@/components/Sidebar.vue'
-import {useRoute, useRouter} from 'vue-router'
-import {getById, updateUser} from '@/factories/user.ts'
+  import {useRoute, useRouter} from 'vue-router'
+  import {getById, updateUser} from '@/factories/user.ts'
+  import {useToaster} from '@/stores/toaster.ts'
 
 
   const router = useRouter()
   const route = useRoute()
+  const toaster = useToaster()
 
   // State for account data
   const registerForm = ref({
@@ -33,8 +35,8 @@ import {getById, updateUser} from '@/factories/user.ts'
       const res = await getById(route.params.id as string)
       registerForm.value = res.data
       role.value = res.data.roleId
-    } catch (err) {
-      console.error(err)
+    } catch (err: any) {
+      toaster.notyErr(err.message, err.data)
     }
   }
 
@@ -47,21 +49,20 @@ import {getById, updateUser} from '@/factories/user.ts'
       } else {
         res = await registerExpert(registerForm.value)
       }
-      console.log(res.message)
+      toaster.notySuccess(res.message)
       return router.push('/account-management')
     } catch (err: any) {
-      console.error(err.message)
-    }
+      toaster.notyErr(err.message, err.data)    }
   }
 
   // Function to handle form submission
   const updateAccount = async () => {
     try {
       const res = await updateUser(route.params.id as string, registerForm.value)
-      console.log(res.message)
+      toaster.notySuccess(res.message)
       return router.push('/account-management')
     } catch (err: any) {
-      console.error(err.message)
+      toaster.notyErr(err.message, err.data)
     }
   }
 

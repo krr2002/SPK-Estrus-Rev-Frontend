@@ -23,7 +23,7 @@
         const res = await getHistoriesByCreator()
         farms.value = res.data
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err)
     }
   }

@@ -3,9 +3,10 @@
   import Sidebar from '@/components/Sidebar.vue'
   import {deleteRule, getAllRules, RuleDataType} from '@/factories/rule.ts'
   import {getLangByIds} from '@/factories/linguistic.ts'
+  import {useToaster} from '@/stores/toaster.ts'
 
 
-
+  const toaster = useToaster()
   const rules = ref<RuleDataType[]>([])
   const langs = ref<any>({})
 
@@ -33,10 +34,10 @@
   const delRule = async (key: number) => {
     try {
       const res = await deleteRule(rules.value[key].id)
-      console.log(res.message)
+      toaster.notySuccess(res.message)
       rules.value.filter((_, idx) => idx !== key)
-    } catch (err) {
-      console.error(err)
+    } catch (err: any) {
+      toaster.notyErr(err.message, err.data)
     }
   }
 </script>
