@@ -47,7 +47,7 @@
       id: '',
       name: '',
       min: 0,
-      max: 0,
+      max: 99,
     })
     editPos.value = fuzzySets.value.length - 1
   }
@@ -130,7 +130,7 @@
               <p class="block text-gray-700">Tipe Parameter (Tipe yang muncul saat input fakta):</p>
               <select v-model="paramData.type" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm">
                 <option :value="LINGUISTIC">Linguistik</option>
-                <option :value="NUMERIC">Numerik</option>
+                <!-- <option :value="NUMERIC">Numerik</option> -->
               </select>
             </label>
           </div>
@@ -145,11 +145,11 @@
               <p class="block text-gray-700">Atribut Linguistik:</p>
               <input :disabled="editPos !== key" v-model="item.name" type="text" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
             </label>
-            <label>
+            <!-- <label>
               <p class="block text-gray-700">Nilai minimal:</p>
               <input :disabled="editPos !== key" v-model="item.min" type="number" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
             </label>
-            <label>
+            <label> -->
               <p class="block text-gray-700">Nilai maksimal:</p>
               <input :disabled="editPos !== key" v-model="item.max" type="number" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" />
             </label>
