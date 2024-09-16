@@ -1,12 +1,17 @@
 <script setup lang="ts">
-const emit = defineEmits<{
-  (e: 'goto', route: string): void;
-}>();
+  import {ref} from 'vue'
 
-const sendPasswordReset = () => {
-  // Function called when the "Send Password Reset" button is pressed
-  emit('goto', 'reset-link-sent'); // Replace 'reset-link-sent' with the desired route after the reset link is sent
-};
+
+  const email = ref('')
+
+  const emit = defineEmits<{
+    (e: 'goto', route: string): void;
+  }>()
+
+  const sendPasswordReset = () => {
+    // Function called when the "Send Password Reset" button is pressed
+    emit('goto', 'reset-link-sent'); // Replace 'reset-link-sent' with the desired route after the reset link is sent
+  }
 </script>
 
 <template>
@@ -34,7 +39,7 @@ const sendPasswordReset = () => {
         </button>
         <!-- Tautan kembali ke login -->
         <div class="mt-4">
-          <a href="#" @click="emit('goto', 'login')" class="text-blue-600 hover:underline">Back to Login</a>
+          <RouterLink to="/login" class="text-blue-600 hover:underline">Kembali</RouterLink>
         </div>
       </div>
     </div>
