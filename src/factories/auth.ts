@@ -12,10 +12,14 @@ type RegisterType = {
   password: string
   confirmPassword: string
 }
-
 type LoginType = {
   credential: string
   password: string
+}
+type ResetPassType = {
+  code: string
+  password: string
+  confirmPassword: string
 }
 
 const apiUrl = import.meta.env.VITE_API_URL + '/auth'
@@ -28,4 +32,10 @@ export const registerExpert = async (payload: RegisterType) => {
 }
 export const login = async (payload: LoginType) => {
   return await postData(`${apiUrl}/login`, payload)
+}
+export const recover = async (payload: { email: string }) => {
+  return await postData(`${apiUrl}/recover`, payload)
+}
+export const resetPassword = async (payload: ResetPassType) => {
+  return await postData(`${apiUrl}/reset-pass`, payload)
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import {useRouter} from 'vue-router'
-  import {registerUser} from '../../factories/auth.ts'
+  import {registerUser} from '@/factories/auth.ts'
   import {reactive} from 'vue'
   import {useToaster} from '@/stores/toaster.ts'
 
